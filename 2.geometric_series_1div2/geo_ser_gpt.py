@@ -1,9 +1,27 @@
 from manim import *
 
+config.pixel_height = 1920
+config.pixel_width = 1080
+config.frame_height = 16
+config.frame_width = 9
+config.disable_caching = True
+
 class GeometricSeriesIntro(Scene):
     def construct(self):
-        series = MathTex("1 + \\frac{1}{2} + \\frac{1}{4} + \\frac{1}{8} + \\ldots")
+        series = MathTex("\\frac{1}{2} + \\frac{1}{4} + \\frac{1}{8} + \\ldots")
         self.play(Write(series))
+        self.wait(2)
+        self.play(FadeOut(series))
+
+        square = Rectangle(width=1, height=2).scale(2)
+        half = Rectangle(width=1, height=1).scale(2).shift(RIGHT*2, DOWN)
+        label = Tex("1/2").move_to(square.get_center())
+        half_label = Tex("1/4").move_to(half.get_center())
+        self.play(Create(square), Write(label))
+        self.wait(1)
+        self.play(Create(half), Write(half_label))
+        self.wait(1)
+        self.play(half.animate.set_fill(YELLOW, opacity=0.5))
         self.wait(2)
 
 class WholeSquare(Scene):

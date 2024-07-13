@@ -49,37 +49,38 @@ class PythagoreanIntroTwoT(Scene):
     def construct(self):
 
         # highlighted triangle
-        a_line = Line(start=[0,0,0], end=[3,0,0]).set_color(BLUE)
+        a_line = Line(start=[0,0,0], end=[3,0,0]).set_color([PURPLE_A, PURPLE_D])
         a_label = MathTex("a").move_to(a_line.get_center() + 0.5*DOWN).set_color(BLUE)
         a = VGroup(a_line, a_label)
 
-        b_line = Line(start=[3,0,0], end=[3,4,0]).set_color(GREEN)
+        b_line = Line(start=[3,0,0], end=[3,4,0]).set_color([GREEN_C, GREEN_A])
         b_label = MathTex("b").next_to(b_line.get_center() + 0.05*RIGHT).set_color(GREEN)
         b = VGroup(b_line, b_label)
 
-        c_line = Line(start=[0,0,0], end=[3,4,0]).set_color(RED)
+        c_line = Line(start=[0,0,0], end=[3,4,0]).set_color([RED, ORANGE])
         c_label = MathTex("c").move_to(c_line.get_center() + LEFT*0.5).set_color(RED)
         c = VGroup(c_line, c_label)
 
-        right_triangle_labeled = VGroup(a, b, c).scale(0.5)
+        right_triangle_labeled = VGroup(a, b, c)
 
         # inside triangle
         triangle = Polygon(
-            [0, 0, 0], [3, 0, 0], [3, 4, 0], color=BLUE, fill_opacity=0.5
-        ).shift(2*DOWN)
-        a_label = MathTex("a").next_to(triangle, DOWN)
-        b_label = MathTex("b").next_to(triangle, RIGHT)
-        c_label = MathTex("c").next_to(triangle, LEFT).shift(RIGHT)
-        formula = MathTex("a^2 + b^2 = c^2").next_to(triangle, UP).shift(LEFT)
-        self.play(FadeIn(triangle), Write(a_label), Write(b_label), Write(c_label))
+            [0, 0, 0], [3, 0, 0], [3, 4, 0], fill_opacity=0.5
+        ).set_color([BLUE_A, BLUE])
+        full_triangle = VGroup(triangle, a, b, c).shift(2*DOWN)
+        # a_label = MathTex("a").next_to(triangle, DOWN)
+        # b_label = MathTex("b").next_to(triangle, RIGHT)
+        # c_label = MathTex("c").next_to(triangle, LEFT).shift(RIGHT)
+        formula = MathTex("a^2 + b^2 = c^2").next_to(full_triangle, UP).shift(LEFT)
+        self.play(FadeIn(full_triangle))
         self.wait(1)
         self.play(Write(formula))
         self.wait(2)
 
         # create square and insert triangle to the square
         def square(a_line, b_line):
-            a_sqr = a_line.copy()
-            b_sqr = b_line.copy()
+            a_sqr = a_line.copy().scale(0.5)
+            b_sqr = b_line.copy().scale(0.5)
             self.play(Rotate(b_sqr, 1/2 * math.pi))
             self.play(a_sqr.animate.move_to([-0.75,0,0]), b_sqr.animate.move_to([1,0,0]))
 
@@ -106,18 +107,18 @@ class PythagoreanIntroTwoT(Scene):
             return VGroup(ab1, ab2, ab3, ab4, text)
 
         def insert_triangles(right_triangle):
-            right_triangle1 = right_triangle.copy()
+            right_triangle1 = right_triangle.copy().scale(0.5)
             self.play(Rotate(right_triangle1, 1/2 * math.pi))
             self.play(right_triangle1.animate.move_to([1, -0.75,0]))
 
-            right_triangle2 = right_triangle.copy()
+            right_triangle2 = right_triangle.copy().scale(0.5)
             self.play(right_triangle2.animate.move_to([1.25,-2.5,0]))
 
-            right_triangle3 = right_triangle.copy()
+            right_triangle3 = right_triangle.copy().scale(0.5)
             self.play(Rotate(right_triangle3, -1/2 * math.pi))
             self.play(right_triangle3.animate.move_to([-0.5,-2.75,0]))
 
-            right_triangle4 = right_triangle.copy()
+            right_triangle4 = right_triangle.copy().scale(0.5)
             self.play(Rotate(right_triangle4, math.pi))
             self.play(right_triangle4.animate.move_to([-0.75,-1,0]))
 
